@@ -3,7 +3,6 @@
 H2detabase テーブル名:items
 
 格納されているデータ:
-
 INSERT INTO items(name, price, img_path) VALUES('りんご', 100,  'apple.jpg');
 INSERT INTO items(name, price, img_path) VALUES('ばなな', 200, 'banana.jpg');
 INSERT INTO items(name, price, img_path) VALUES('みかん', 300, 'mikan.jpg');
