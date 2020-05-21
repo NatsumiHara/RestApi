@@ -8,8 +8,38 @@ INSERT INTO items(name, price, img_path) VALUES('ばなな', 200, 'banana.jpg');
 INSERT INTO items(name, price, img_path) VALUES('みかん', 300, 'mikan.jpg');
 INSERT INTO items(name, price, img_path) VALUES('ぶどう', 400, 'glape.jpg');
 
+####ファイル<rest-api-0.0.1-SNAPSHOT.jar>
+実行:java -jar rest-api-0.0.1-SNAPSHOT.jar
+
 ## GETコマンド
 アクセス:http://localhost:8080/api/items
+
+###id検索
+
+```
+$ curl http://localhost:8080/api/items/1
+```
+↓
+
+結果:[{"id":1,"name":"りんご","price":100,"imgPath":"apple.jpg"}]
+
+###price検索
+
+```
+$ curl http://localhost:8080/api/items/findByPrice?price=200
+```
+↓
+
+結果:[{"id":2,"name":"ばなな","price":200,"imgPath":"banana.jpg"}]
+
+###name+price検索
+
+```
+$ curl http://localhost:8080/api/items/findByNameAndPrice?name=みかん&price=300
+```
+↓
+
+結果:[{"id":3,"name":"みかん","price":300,"imgPath":"mikan.jpg"}]
 
 ## POSTコマンド
 ```

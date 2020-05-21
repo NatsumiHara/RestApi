@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,24 @@ public class ItemService {
 	public List<Item> findAll() {
 		return itemRepository.findAll();
 	}
+	
+	/*GETid*/
+
+	public Optional<Item> findById(Integer id) {
+		return itemRepository.findById(id);
+	}
+	
+	/*GETprice*/
+	
+	public List<Item> findByPrice(Integer price){
+		return itemRepository.findByPrice(price);
+	}
+	
+	/*GETname+price*/
+	
+	public List<Item> findByNameAndPrice(String name, Integer price){
+		return itemRepository.findByNameAndPrice(name, price);
+	}
 		
 	/*POST*/
 	public Item create(Item item) {
@@ -35,5 +54,8 @@ public class ItemService {
 	public Item update(Item item) {
 		return itemRepository.save(item);
 	}
+
+	
+	
 
 }
