@@ -29,7 +29,6 @@ public class ItemRestController {
 	
 	@GetMapping
 	List<Item> getItems(){
-
 		List<Item> customers = itemService.findAll(); /*JpaRepositoryのfindAllを呼び出しitemをListで取得*/
 		return customers;//全件検索結果をリターン
 	}
