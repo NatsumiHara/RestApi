@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.domain.Item;
@@ -113,6 +115,34 @@ public class ItemRestControllerTest {
 	}
 	
 	/*POST*/
+	
+	@Test
+	public void postItemTest() throws Exception {
+		String url= "http://localhost:" + port + "/api/items";
+	    Item item =new Item();
+	    item.setName("もも");//"{\"name\":\"もも\",\"price\":\"1000\",\"imgPath\":\"peach.jpg\"}"
+	    item.setPrice(1000);
+	    item.setImgPath("peach.jpg");
+		
+		Item postItem = this.restTemplate.postForObject(url, item, Item.class);
+		assertThat(postItem.getId()).isEqualTo(5);
+		System.out.println("★");
+	}
+	
+	/*DELETE*/
+	
+	@Test
+	public void deleteItem() throws Exception {
+//		this.restTemplate.delete("http://localhost:" + port + "/api/items/1");
+		String url= "http://localhost:" + port + "/api/items/1";
+		restTemplate.delete(url);
+		//Item deleteItem = this.restTemplate.exchange(url, HttpMethod.DELETE, HttpEntity.EMPTY, Item.class);
+				
+		assertThat(deleteItem.getId()).isNull();
+		System.out.println("★");
+	}
+	
+	/*PUT*/
 	
 	
 
