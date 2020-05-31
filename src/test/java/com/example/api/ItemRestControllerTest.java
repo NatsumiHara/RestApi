@@ -1,6 +1,7 @@
 package com.example.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
@@ -10,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
+//import org.springframework.http.HttpEntity;
+//import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.domain.Item;
@@ -132,18 +133,35 @@ public class ItemRestControllerTest {
 	/*DELETE*/
 	
 	@Test
-	public void deleteItem() throws Exception {
+	public void deleteItemTest() throws Exception {
 //		this.restTemplate.delete("http://localhost:" + port + "/api/items/1");
 		String url= "http://localhost:" + port + "/api/items/1";
-		restTemplate.delete(url);
+		this.restTemplate.delete(url);//指定されたURLにあるリソースを削除
 		//Item deleteItem = this.restTemplate.exchange(url, HttpMethod.DELETE, HttpEntity.EMPTY, Item.class);
-				
-		assertThat(deleteItem.getId()).isNull();
+		Item deleteItem = this.restTemplate.getForObject(url, Item.class);
+//		Item expected = new Item();
+//		expected.setId(1);	//getId()でidのみでチェックしてるため、idだけsetする。
+		assertNull(deleteItem);
+//		assertThat(deleteItem.getId()).isNull();		
 		System.out.println("★");
 	}
 	
 	/*PUT*/
 	
-	
+	@Test
+	public void putItemTest() throws Exception {
+		String url= "http://localhost:" + port + "/api/items/4";
+		this.restTemplate.delete(url);
+		 Item item =new Item();
+		   	item.setId(4);
+		    item.setName("もも");//"{\"name\":\"もも\",\"price\":\"1000\",\"imgPath\":\"peach.jpg\"}"
+		    item.setPrice(1000);
+		    item.setImgPath("peach.jpg");
+		    this.restTemplate.put(url, item);//指定されたオブジェクトをURLにPUTして、新しいリソースを作成
+//		    Item putItem = this.restTemplate.postForObject(url, item, Item.class);
+		    System.out.println(item);
+			assertThat(item.getName()).isEqualTo("もも");
+			System.out.println("★");
+	}
 
 }
