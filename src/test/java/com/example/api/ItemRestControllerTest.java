@@ -3,6 +3,7 @@ package com.example.api;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.net.URI;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-//import org.springframework.http.HttpEntity;
-//import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.domain.Item;
@@ -151,7 +151,7 @@ public class ItemRestControllerTest {
 	@Test
 	public void putItemTest() throws Exception {
 		String url= "http://localhost:" + port + "/api/items/4";
-		this.restTemplate.delete(url);
+//		this.restTemplate.delete(url);
 		 Item item =new Item();
 		   	item.setId(4);
 		    item.setName("もも");//"{\"name\":\"もも\",\"price\":\"1000\",\"imgPath\":\"peach.jpg\"}"
@@ -159,8 +159,15 @@ public class ItemRestControllerTest {
 		    item.setImgPath("peach.jpg");
 		    this.restTemplate.put(url, item);//指定されたオブジェクトをURLにPUTして、新しいリソースを作成
 //		    Item putItem = this.restTemplate.postForObject(url, item, Item.class);
-		    System.out.println(item);
-			assertThat(item.getName()).isEqualTo("もも");
+		    URI uri =new URI(url);
+		    RequestEntity<Item> requestEntity = RequestEntity
+		    		.put(uri)
+		    		.body(item);
+		    this.restTemplate.exchange(requestEntity, Item.class);
+		    Item putItem = this.restTemplate.getForObject(url, Item.class); 							
+//		    System.out.println(putItem.getBody());
+			assertThat(putItem.getName()).isEqualTo("もも");
+			System.out.println(putItem);
 			System.out.println("★");
 	}
 
